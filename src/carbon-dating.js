@@ -19,19 +19,12 @@ const HALF_LIFE_PERIOD = 5730;
  */
 function dateSample(sampleActivity) {
   
-  if (typeof (sampleActivity) !== "string") {
+  if (typeof sampleActivity !== 'string' || !Number(sampleActivity)|| sampleActivity < 1 || sampleActivity > MODERN_ACTIVITY) {
     return false;
-  }
-  
-  const sampleActivityNumber = sampleActivity.toNumber();
-
-  if (!sampleActivityNumber || sampleActivityNumber < 0 || sampleActivityNumber > MODERN_ACTIVITY) {
-    return false;
-  }
-
-  let k = 0.693/HALF_LIFE_PERIOD;
-  let time = Math.log(MODERN_ACTIVITY/sampleActivityNumber)/k;
-  return Math.ceil(time);
+ } else {
+    let k = 0.693 / HALF_LIFE_PERIOD;
+    return Math.ceil((Math.log(MODERN_ACTIVITY / Number(sampleActivity))) / k);
+ }
 }
 
 module.exports = {
